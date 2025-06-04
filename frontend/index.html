@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HANNA - Impact Hub AI Assistant</title>
+    <meta name="description" content="Converse com HANNA, a assistente virtual inteligente do Impact Hub">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --bg-primary: #0a0505;
+            --bg-secondary: #140a0a;
+            --bg-tertiary: #1f1010;
+            --bg-elevated: #2a1515;
+            --impact-red: #ff4444;
+            --impact-red-dark: #cc2222;
+            --impact-red-light: #ff6666;
+            --impact-orange: #ff6b44;
+            --impact-glow: #ff3333;
+            --impact-gradient: linear-gradient(135deg, #ff4444 0%, #ff6b44 100%);
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.9);
+            --text-muted: rgba(255, 255, 255, 0.6);
+            --text-subtle: rgba(255, 255, 255, 0.4);
+            --surface-dark: rgba(255, 68, 68, 0.04);
+            --surface-hover: rgba(255, 68, 68, 0.08);
+            --border-subtle: rgba(255, 68, 68, 0.12);
+            --border-active: rgba(255, 68, 68, 0.3);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.15);
+            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.2);
+            --shadow-glow: 0 0 40px rgba(255, 68, 68, 0.3);
+            --cubic-ease: cubic-bezier(0.4, 0, 0.2, 1);
+            --spring-ease: cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            font-weight: 400;
+            letter-spacing: -0.011em;
+        }
+        /* Many styles omitted for brevity */
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="orb-section">
+            <div class="orb-wrapper" id="orbWrapper">
+                <div class="orb"></div>
+            </div>
+            <div class="status-bar" id="statusBar">
+                <div class="status-icon"></div>
+                <span id="statusText">Pronta para conversar</span>
+            </div>
+        </div>
+        <div class="transcript-section">
+            <div class="messages-container" id="messagesContainer">
+                <div class="empty-state">
+                    <div class="empty-icon">🎯</div>
+                    <h3 class="empty-title">Olá, empreendedor!</h3>
+                    <p class="empty-text">
+                        Clique no orbe para iniciar uma conversa sobre o Impact Hub
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="action-buttons">
+            <button class="action-btn" id="clearBtn" title="Limpar conversa">🗑️</button>
+        </div>
+    </div>
+
+<script>
+class ChatSystem {
+    constructor() {
+        this.orbWrapper = document.getElementById('orbWrapper');
+        this.messagesContainer = document.getElementById('messagesContainer');
+        this.statusBar = document.getElementById('statusBar');
+        this.statusText = document.getElementById('statusText');
+        this.clearBtn = document.getElementById('clearBtn');
+        this.isListening = false;
+        this.conversationHistory = [];
+        this.init();
+    }
+
+    init() {
+        this.orbWrapper.addEventListener('click', () => this.toggleListening());
+        this.clearBtn.addEventListener('click', () => this.clearConversation());
+        setTimeout(() => {
+            this.addMessage(
+                "Olá! Eu sou a HANNA, sua assistente virtual do Impact Hub. Como posso ajudar você hoje?",
+                false
+            );
+        }, 1000);
+    }
+
+    async toggleListening() {
+        if (this.isListening) return;
+        this.isListening = true;
+        this.orbWrapper.classList.add('listening');
+        this.showStatus('Ouvindo...');
+        await this.processVoiceInput();
+    }
+
+    async processVoiceInput() {
+        const text = prompt('Digite sua pergunta');
+        if (!text) {
+            this.isListening = false;
+            this.orbWrapper.classList.remove('listening');
+            this.hideStatus();
+            return;
+        }
+        this.addMessage(text, true);
+        const typingIndicator = this.showTypingIndicator();
+        try {
+            const resp = await fetch('/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ text })
+            });
+            const data = await resp.json();
+            typingIndicator.remove();
+            this.addMessage(data.response, false);
+            const audio = new Audio(data.audio_url);
+            audio.play();
+        } catch (e) {
+            typingIndicator.remove();
+            this.addMessage('Erro ao conectar ao servidor.', false);
+        } finally {
+            this.isListening = false;
+            this.orbWrapper.classList.remove('listening');
+            this.hideStatus();
+        }
+    }
+
+    addMessage(text, isUser = true) {
+        const emptyState = this.messagesContainer.querySelector('.empty-state');
+        if (emptyState) emptyState.remove();
+        const messageBlock = document.createElement('div');
+        messageBlock.className = 'message-block';
+        const time = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+        messageBlock.innerHTML = `
+            <div class="message-avatar ${isUser ? 'user' : 'hanna'}">${isUser ? '👤' : '🤖'}</div>
+            <div class="message-content">
+                <div class="message-header">
+                    <div class="message-author ${isUser ? '' : 'hanna-author'}">${isUser ? 'Você' : 'HANNA'}</div>
+                    <div class="message-time">${time}</div>
+                </div>
+                <div class="message-text ${isUser ? 'user-message' : 'hanna-message'}">${text}</div>
+            </div>`;
+        this.messagesContainer.appendChild(messageBlock);
+        this.messagesContainer.scrollTop = this.messagesContainer.scrollHeight;
+        this.conversationHistory.push({ text, isUser, time });
+    }
+
+    showTypingIndicator() {
+        const typing = document.createElement('div');
+        typing.className = 'message-block typing-message';
+        typing.innerHTML = `
+            <div class="message-avatar hanna">🤖</div>
+            <div class="message-content">
+                <div class="message-header">
+                    <div class="message-author hanna-author">HANNA</div>
+                    <div class="message-time">digitando...</div>
+                </div>
+                <div class="message-text hanna-message">
+                    <div class="typing-indicator">
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                    </div>
+                </div>
+            </div>`;
+        this.messagesContainer.appendChild(typing);
+        this.messagesContainer.scrollTop = this.messagesContainer.scrollHeight;
+        return typing;
+    }
+
+    showStatus(text) {
+        this.statusText.textContent = text;
+        this.statusBar.classList.add('visible');
+    }
+
+    hideStatus() {
+        this.statusBar.classList.remove('visible');
+    }
+
+    clearConversation() {
+        if (confirm('Deseja limpar toda a conversa?')) {
+            this.messagesContainer.innerHTML = `
+                <div class="empty-state">
+                    <div class="empty-icon">🎯</div>
+                    <h3 class="empty-title">Conversa limpa!</h3>
+                    <p class="empty-text">Clique no orbe para iniciar uma nova conversa</p>
+                </div>`;
+            this.conversationHistory = [];
+            setTimeout(() => {
+                this.addMessage(
+                    'Pronta para uma nova conversa! Como posso ajudar você hoje?',
+                    false
+                );
+            }, 1000);
+        }
+    }
+}
+
+const chatSystem = new ChatSystem();
+</script>
+</body>
+</html>
