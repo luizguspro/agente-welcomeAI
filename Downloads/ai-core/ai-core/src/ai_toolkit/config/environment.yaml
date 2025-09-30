@@ -1,0 +1,19 @@
+# Configurações de ambiente
+paths:
+  models: ${MODEL_BASE_PATH:/opt/models}
+  data: ${DATA_PATH:/opt/data}
+  artifacts: ${ARTIFACTS_PATH:/opt/artifacts}
+  cache: ${CACHE_PATH:/tmp/ai_core_cache}
+
+runtime:
+  batch_size: 300
+  max_workers: 4
+  log_level: INFO
+  
+tensorflow:
+  mixed_precision: false
+  gpu_memory_growth: true
+  
+limits:
+  max_input_length: 10000
+  max_batch_size: 500

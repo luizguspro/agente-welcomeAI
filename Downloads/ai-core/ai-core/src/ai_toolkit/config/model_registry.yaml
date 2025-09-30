@@ -1,0 +1,52 @@
+models:
+- id: logits_v1
+  path: models/logits_v1/model.keras
+  data_version: ds_2025_08_10
+  tokenizer_version: bert_pt_v1
+  preprocessing_version: 1.0.0
+  code_commit: a3f5c2d
+  metrics:
+    f1_weighted: 0.92
+    macro_f1: 0.88
+    accuracy: 0.91
+  temperature: 3.0
+  created_at: '2025-08-10T12:00:00Z'
+  enabled: true
+- id: augmented_v1
+  path: models/augmented_v1/model.keras
+  data_version: ds_2025_08_10
+  tokenizer_version: bert_pt_v1
+  preprocessing_version: 1.0.0
+  code_commit: a3f5c2d
+  metrics:
+    f1_weighted: 0.93
+    macro_f1: 0.89
+    accuracy: 0.92
+  temperature: 2.5
+  created_at: '2025-08-10T14:00:00Z'
+  enabled: true
+- id: fonetica_v1
+  path: models/fonetica_v1/model.keras
+  data_version: ds_2025_08_10
+  tokenizer_version: bert_pt_v1
+  preprocessing_version: 1.0.0
+  code_commit: a3f5c2d
+  metrics:
+    f1_weighted: 0.9
+    macro_f1: 0.86
+    accuracy: 0.89
+  temperature: 2.0
+  created_at: '2025-08-10T16:00:00Z'
+  enabled: true
+ensemble:
+  default_strategy: maioria
+  strategies:
+    unanime:
+      require_all: true
+    maioria:
+      min_agreement: 0.5
+    pesos:
+      weights:
+        logits_v1: 0.35
+        augmented_v1: 0.35
+        fonetica_v1: 0.3

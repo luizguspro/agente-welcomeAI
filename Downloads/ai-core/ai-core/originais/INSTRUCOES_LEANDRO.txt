@@ -1,0 +1,19 @@
+TREINAR MODELO AI_CORE
+======================
+
+OPÇÃO 1 - RODAR LOCAL:
+cd /home/lgsilva/SAT_IA/ai_core
+python3 utiliarios/prepara_dados_treino.py --raw treinamento.csv --out artefatos/
+python3 utiliarios/treina_modelos.py --data artefatos/ --epochs 5
+
+OPÇÃO 2 - RODAR COM SPARK:
+cd /home/lgsilva/SAT_IA_API/aicore-gpu
+./scripts/submit_treino.sh -i treinamento.csv -o models/ -m modelo_novo
+
+ARQUIVOS QUE JÁ EXISTEM:
+- pipeline_completo_job.py (job principal)
+- prepara_dados_treino.py (preparação)
+- treina_modelos.py (treinamento BERT)
+- submit_treino.sh (submissão cluster)
+
+NÃO PRECISA CRIAR NADA NOVO!

@@ -1,0 +1,60 @@
+Analisando projeto em: /home/lgsilva/SAT_IA/ai_core
+========================================
+
+[MODELOS KERAS]
+
+[MODELOS H5]
+
+[ARQUIVOS PICKLE]
+  ✓ label_encoder.pkl -> /models
+    Tamanho: 527
+  ✓ astype_copy.pkl -> /venv_prod/lib/python3.9/site-packages/numpy/core/tests/data
+    Tamanho: 716
+
+[LABEL ENCODERS]
+  ✓ label_encoder.pkl -> /models
+    Tamanho: 527
+
+[TOKENIZERS]
+  ✓ tokenizer.py -> /src/ai_toolkit/preprocessing
+    Tamanho: 2.7K
+  ✓ tokenizer.cpython-312.pyc -> /src/ai_toolkit/preprocessing/__pycache__
+    Tamanho: 3.4K
+  ✓ _tokenizer.py -> /venv_prod/lib/python3.9/site-packages/pip/_vendor/html5lib
+    Tamanho: 76K
+  ✓ _tokenizer.cpython-39.pyc -> /venv_prod/lib/python3.9/site-packages/pip/_vendor/html5lib/__pycache__
+    Tamanho: 39K
+
+[REGISTRY CONFIG]
+  ✓ model_registry.yaml -> /src/ai_toolkit/config
+    Tamanho: 1.4K
+
+[CLASS WEIGHTS]
+
+[DIRETÓRIOS IMPORTANTES]
+  ✓ /models -> 1 arquivos
+  ✓ /artefatos -> 1 arquivos
+  ✓ /dados -> 1 arquivos
+  ✓ /originais -> 1 arquivos
+  ✗ /checkpoints -> não existe
+
+[AMBIENTE PYTHON]
+2025-09-11 13:14:44.749497: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2025-09-11 13:14:44.764114: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1757607284.780022  511046 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1757607284.784760  511046 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+W0000 00:00:1757607284.797988  511046 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1757607284.798026  511046 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1757607284.798029  511046 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1757607284.798032  511046 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+2025-09-11 13:14:44.802031: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 AVX512F AVX512_VNNI AVX512_BF16 AVX512_FP16 AVX_VNNI AMX_TILE AMX_INT8 AMX_BF16 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+  Python: 3.12.5
+  TensorFlow: 2.19.0
+  GPUs TF: 2 disponíveis
+  PyTorch: não instalado
+  Transformers: 4.55.0
+
+========================================
+Análise concluída!

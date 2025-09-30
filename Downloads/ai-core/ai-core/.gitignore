@@ -1,0 +1,143 @@
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+.pytest_cache/
+.coverage
+.tox/
+.nox/
+.hypothesis/
+*.cover
+*.log
+.git
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pyre/
+.pytype/
+.pdm.toml
+
+# Virtual Environments
+venv/
+venv_prod/
+ENV/
+env/
+.venv/
+.conda/
+*.zip
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+*.ipynb
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Dados e Resultados (não versionar dados sensíveis)
+data/samples/*.csv
+data/samples/*.parquet
+!data/samples/test_input.csv  # Exceto arquivo de exemplo
+resultado*.csv
+output*.csv
+producao*.csv
+teste*.csv
+predictions*.csv
+*.parquet
+
+# Modelos (muito grandes para git)
+models/checkpoint/
+models/trained/
+models/*.keras
+models/*.h5
+models/*.pb
+models/*.ckpt
+*.pkl
+!models/label_encoder.pkl  # Exceto o encoder que é pequeno
+
+# Artefatos de treino
+artefatos/
+artefatos_test/
+artifacts/
+checkpoints/
+logs/
+tensorboard/
+mlruns/
+
+# Arquivos temporários
+*.tmp
+*.temp
+*.bak
+*.backup
+*.old
+.cache/
+
+# Arquivos de configuração local
+.env
+.env.local
+*.local
+config/local/
+
+# Spark/Hadoop
+metastore_db/
+spark-warehouse/
+derby.log
+*.crc
+
+# Arquivos de teste
+test_*.csv
+test_*.txt
+demo_output.csv
+metrics.json
+relatorio*.txt
+relatorio*.json
+
+# Scripts temporários
+test_*.sh
+test_*.py
+!tests/  # Exceto pasta de testes oficial
+
+# Documentação gerada
+docs/_build/
+site/
+
+# Sistema
+Thumbs.db
+.Spotlight-V100
+.Trashes
+
+# Arquivos grandes
+*.tar.gz
+*.zip
+*.rar
+*.7z
+
+# Específicos do projeto
+ai-core-env.zip
+spark_batch_predict.py
+submit_spark_gpu.sh
+demo.sh
+run_local.sh
+test_spark_local.py

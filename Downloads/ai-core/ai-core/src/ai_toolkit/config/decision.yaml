@@ -1,0 +1,25 @@
+# Configuração de decisão e thresholds
+decision:
+  min_confidence: 0.70  # Probabilidade mínima para aceitar predição
+  
+  inconclusivo_rules:
+    - type: "low_confidence"
+      threshold: 0.70
+      message: "Confiança abaixo do mínimo"
+      
+    - type: "high_disagreement"
+      max_std: 0.3
+      message: "Alta discordância entre modelos"
+      
+    - type: "no_majority"
+      min_votes: 2
+      message: "Sem maioria clara"
+  
+  calibration:
+    enabled: true
+    method: "temperature_scaling"
+    
+  output:
+    include_probabilities: true
+    include_per_model: true
+    decimal_places: 2

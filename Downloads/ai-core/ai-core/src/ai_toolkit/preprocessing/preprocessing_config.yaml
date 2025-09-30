@@ -1,0 +1,26 @@
+# Configuração de pré-processamento v1.0.0
+version: "1.0.0"
+
+text:
+  remove_accents: true
+  lowercase: true
+  remove_special_chars: true
+  
+ncm:
+  num_digits: 8
+  format: "spaced"  # spaced | raw
+  
+phonetic:
+  algorithm: "soundex"
+  separator: "-"
+  add_sep_tokens: true
+  sep_token: "[SEP]"
+  
+tokenizer:
+  model_name: "neuralmind/bert-base-portuguese-cased"
+  version: "bert_pt_v1"
+  max_lengths:
+    description: 64
+    phonetic: 20
+    ncm: 11
+  do_lower_case: true
